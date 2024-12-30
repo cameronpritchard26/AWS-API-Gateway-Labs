@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Call Example</title>
+</head>
+<body>
+    <h1>API Call Example</h1>
+    <input type="text" id="txtInput" placeholder="Enter text here">
+    <button id="btnSubmit">Submit</button>
+    <hr />
+    <h2>Response</h2>
+    <pre id="response"></pre>
+    <script>
+        document.getElementById('btnSubmit').addEventListener('click', function() {
+            const input = document.getElementById('txtInput').value;
+
+            document.getElementById('response').innerText = 'Loading... input: ' + input;
+
+            input2 = '{"symbols": "' + input + '"}'
+
+            fetch('https://api.devcam.click/GetStockQuote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Host': 'api.devcam.click'
+                },
+                body: JSON.stringify({ data: JSON.parse(input2) })
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('response').innerText = JSON.stringify(data, null, 2))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
